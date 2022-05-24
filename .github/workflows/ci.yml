@@ -1,0 +1,23 @@
+name: GitHub Actions Build and Deploy Demo
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+    - name: Install and Build
+      run: |
+        npm install
+        npm run-script build
+    - name: Deploy
+      uses: uses: JamesIves/github-pages-deploy-action@v4.3.3
+      with:
+        ACCESS_TOKEN: ${{ secrets.J_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: build
